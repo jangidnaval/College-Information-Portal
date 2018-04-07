@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		
+		<script >
+			
+			function validateLogin() {
+				
+				var uname=document.forms["LoginForm"]["fid"].value;
+				var pass=document["LoginForm"]["password"].value;
+				
+				//document.getElementById("chk").innerHTML = pass;
+				
+				if(pass==null || pass=="")
+				{
+					alert("Please enter a password!");
+					return false;
+				}
+				else
+				if(uname=="" ||uname.length<=4)
+				{alert("Please enter a valid fid");
+					
+				return false;}
+				return true;
+				
+			}
+		</script>
+		
+		
+		<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+		<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+		<link href="css/bootstrap.css" rel="stylesheet" />
+		<link href="css/bootstrap-theme.css" rel="stylesheet" />
+		<script src="js/bootstrap.min.js"></script>
+		
+	</head>
+<body>
+
+<div class="jumbotron">
+<div class="container text-center">
+<h1>Welcome to MNNIT Information Portal</h1>      
+</div>
+</div>
+<div class="container">
+<div class="row">
+<div class="col-md-4 col-md-offset-7">
+<div class="panel panel-default">
+<div class="panel-heading">
+<span class="glyphicon glyphicon-lock"></span>Faculty Login</div>
+<div class="panel-body">
+<form  name="LoginForm"  action="facultylogin.php"  onsubmit="return validateLogin()" mathod="post" class="form-horizontal" role="form">
+<div class="form-group">
+<label  class="col-sm-3 control-label">
+fid</label>
+<div class="col-sm-9">
+<input type="text" class="form-control" id="fid" name="fid" placeholder="User Name" required>
+</div>
+</div>
+<div class="form-group">
+<label  class="col-sm-3 control-label">
+password</label>
+<div class="col-sm-9">
+<input type="password" class="form-control" id="password" name="password" placeholder="password" required>
+</div>
+</div>
+
+<div class="form-group">
+<div class="col-sm-offset-3 col-sm-9">
+<div class="checkbox">
+<label>
+<input type="checkbox"/>
+Remember me
+</label>
+</div>
+</div>
+</div>
+<div class="form-group last">
+<div class="col-sm-offset-3 col-sm-9">
+<button type="submit" class="btn btn-success btn-sm">
+Sign in</button>
+<button type="reset" class="btn btn-default btn-sm">
+Reset</button>
+</div>
+</div>
+</form>
+</div>
+<div class="panel-footer">
+Not Registred? <a href="facultysignup.html">Register here</a>
+</div>
+<div class="panel-footer">
+Forgot password? <a href="reset.html">reset</a>
+</div>
+<div class="panel-footer">
+Student? <a href="studentlogin.html">click here</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+</body>
+</html>

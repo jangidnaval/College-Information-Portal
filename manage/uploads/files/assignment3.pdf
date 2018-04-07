@@ -1,0 +1,110 @@
+							ASSIGNMENT WEEK 2
+
+								HTTP
+
+
+
+A. The Basic HTTP GET/response interaction
+1. 	Browser HTTP version 1.1(curl --head www.test.com)
+	Server HTTP version 1.1
+
+2.	Accept-Language: en-us, en;q=0.50\r\n
+
+3.	OWN IP:172.31.132.126
+	server IP:128.119.245.12
+
+4.	HTTP/1.1 200 OK (text/html)
+
+5.	Last-Modified: Tue, 23 Sep 2003 05:29:00 GMT\r\n
+
+6.	Content-Length: 73
+
+7.	No all of the headers can be found in the raw data
+
+
+B.	The HTTP CONDITIONAL GET/response interaction
+8.	NO, “IF-MODIFIED-SINCE” line
+
+9.	Yes because we can see the contents in the Line-based text data field as " Congratulations again!  Now you've downloaded the file 		lab2-2.html."
+
+10.	Yes. The information followed is:If-Modified-Since: Tue, 23 Sep 2003 05:35:00 GMT\r\n
+
+11.	The status code and phrase returned from the server is HTTP/1.1 304 Not Modified.The server didn’t return the contents of the file 		since the browser loaded it from its cache. 
+ 	
+
+C. Retrieving Long Documents
+12.	1 HTTP GET request message sent
+	packet number in the trace contains the GET message for the Bill or Rights is : 14
+
+13.	Packet numbe 14
+
+14.	status code and phrase in the response: 490 HTTP/1.1 200 OK
+
+15.	TCP segments needed to carry the single HTTP response and the text ofthe Bill of Rights: 
+	[4 Reassembled TCP Segments (4816 bytes): #10(1460), #11(1460), #13(1460), #14(436)]
+
+
+D. HTML Documents with Embedded Objects
+16.	HTTP GET request messages sent : 3
+	a. 128.119.245.12 
+	b. 165.193.123.218 
+	c. 134.241.6.82   	
+
+17.	By checking the TCP ports we can see if our files were downloaded serially or in parallel. In this case the 2 images were transmitted 		over 2 TCP connections therefore they were downloaded serially.
+
+
+E. HTTP Authentications
+18.	Status code: 401 , Phrase: Authorization Required 
+
+19.	Authorization: Basic ZXRoLXN0dWRlbnRzOm5ldHdvcmtz\r\n
+
+
+
+
+
+
+								TCP
+
+
+A. A first look at the captured trace
+1.	CLIENT IP address: 192.168.1.102
+	CLIENT TCP port number: 1161
+
+2.	Destination computer: gaia.cs.umass.edu
+	IP address: 128.119.245.12TCP port number: 80
+
+
+B. TCP Basics	
+3.	Sequence number of the TCP SYN segment is used to initiate the TCP connection between the client 
+	computer and gaia.cs.umass.edu.The value is 0 in this trace.The SYN flag is set to 1 and it indicates that this segment is a SYN 		segment.
+
+4.	Sequence number of the SYNACK segment from gaia.cs.umass.edu to the client computer in reply to the SYN has the value of 0 in this 		trace.
+	The value of the ACKnowledgement field in the SYNACK segment is 1. The value of the ACKnowledgement field in the SYNACK segment is 		determined by gaia.cs.umass.edu by adding 1 to the initial sequence number of SYN segment from the client computer (i.e.the sequence 		number of the SYN segment initiated by the client computer is 0). 
+	The SYN flag and Acknowledgement flag in the segment are set to 1 and they indicate that this segment is a SYNACK segment.
+
+
+5.	 No. 4 segment is the TCP segment containing the HTTP POST command. The sequence number of this segment has the value of 1. 
+
+6.	The HTTP POST segment is considered as the first segment. Segments 1 – 6 are No. 4, 5, 7, 8, 10, and 11 in this trace respectively. 		The ACKs of segments 1 – 6 are No. 6, 9, 12, 14, 15, and 16 in this trace
+	Segment 1 sequence number: 1
+	Segment 2 sequence number: 566
+	Segment 3 sequence number: 2026
+	Segment 4 sequence number: 3486 
+	Segment 5 sequence number: 4946
+	Segment 6 sequence number: 6406
+
+7.	Length of the first TCP segment (containing the HTTP POST): 565 bytes
+	Length of each of the other five TCP segments: 1460 bytes (MSS)
+
+8.	The minimum amount of buffer space (receiver window) advertised at gaia.cs.umass.edu for the entire trace is 5840 bytes, which shows 		in the first acknowledgement from the server. This receiver window grows steadily until a maximum receiver buffer size of 62780 bytes. 		The sender is never throttled due to lacking of receiver buffer space by inspecting this trace. 
+
+9.	 There are no retransmitted segments in the trace file. 
+	We can verify this by checking the sequence numbers of the TCP segments in the trace file. In the Time-Sequence-Graph (Stevens) of 		this trace, all sequence numbers from the source (192.168.1.102) to the destination (128.119.245.12) are increasing monotonically with 		respect to time. If there is a retransmitted segment, the sequence number of this retransmitted segment should be smaller than those 		of its neighboring segments.
+
+10.	The difference between the acknowledged sequence numbers of two consecutive ACKs indicates the data received by the server between 		these two ACKs. By inspecting the amount of acknowledged data by each ACK, there are cases where the receiver is ACKing every other 		segment. 
+	For example, segment of No. 80 acknowledged data with 2920 bytes = 1460*2 bytes. 
+
+11.	we select the average time period as the whole connection time. Then, the average throughput for this TCP connection is computed asthe 		ratio between the total amount data and the total transmission time. The total amount data transmitted can be computed by 		thedifferencebetween the sequence number of the first TCP segment (i.e. 1 byte for No. 4 segment) and the acknowledged sequence number 		of the last ACK (164091 bytes for No. 202 segment). Therefore, the total data are 164091 - 1 = 164090 bytes. The whole transmission 		time is the difference of the time instant of the first TCP segment (i.e., 0.026477 second for No.4 segment) and the time instant of 		the last ACK (i.e., 5.455830 second for No. 202 segment). 
+	Therefore, the total transmission time is 5.455830 - 0.026477 = 5.4294 seconds. Hence, the throughput for the TCP connection 		iscomputed as 164090/5.4294 = 30.222 KByte/sec. 
+
+
